@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Savings</title>
+    <link rel="shortcut icon" href="logo1.png">
+    <link rel="stylesheet" href="porte-feuille.css">
+</head>
+
+<body>
+    <header class="Barre_en_haut">
+        <a class="retour" href="accueil.html">
+            <h4> &#8617;Retour</h4>
+        </a>
+        <span class="trois_barres"> <a href="compte.html"><img src="trois_barres.png" alt=""></a> </span>
+    </header>
+
+    <main class="Bloc_en_bas">
+        <h1>Mon Porte-monnaie</h1>
+        <h3>Rechargez votre compte, versez vos cotisations et encaissez votre argent</h3>
+
+        <section class="solde">
+            <section class="solde1">
+                <h4>Solde USD</h4>
+                <h3 id="solde-usd">0 USD</h3>
+            </section>
+
+            <section class="solde2">
+                <h4>Solde CDF</h4>
+                <h3 id="solde-cdf">0 CDF</h3>
+            </section>
+        </section>
+
+        <section class="transaction">
+            <section class="Recharger">
+                <button onclick="ouvrirFormulaire('recharger')">Recharger votre compte</button>
+            </section>
+
+            <section class="retrait">
+                <button onclick="ouvrirFormulaire('retrait')">Retrait</button>
+            </section>
+        </section>
+    </main>
+    <footer class="contenir" id="bloc-contenir" style="display: none;">
+        <section id="secform">
+            <section id="formulaire-transaction">
+                <h4 id="titre-transaction">Transaction</h4>
+                <p id="dispo-mobile-money"></p>
+                <label for="montant-trans">Montant : </label>
+                <input type="number" id="montant-trans" min="1" placeholder="Ex: 50">
+                <br>
+
+                <label for="devise-trans">Devise : </label>
+                <select id="devise-trans">
+                    <option value="USD">USD</option>
+                    <option value="CDF">CDF</option>
+                </select>
+                <br>
+                <section class="action">
+                    <button id="btn-valider-trans">Valider</button>
+                    <button onclick="document.getElementById('bloc-contenir').style.display='none'">Annuler</button>
+                </section>
+            </section>
+        </section>
+    </footer>
+
+    <script>
+        // 1. Récupération des données utilisateurs liées à la session actuelle
+        let utilisateur = JSON.parse(localStorage.getItem("utilisateur"));
+        let utilisateurs = JSON.parse(localStorage.getItem("utilisateurs")) || [];
+
+        let userActuel = utilisateurs.find(u => u.nomu === utilisateur.nomu);
+        if (!userActuel || userActuel.portemonnaieActive !== true) {
+            alert("Activez d'abord votre porte-monnaie");
+            window.location.href = "accueil.html";
+        }
+        let typeActionActuelle = "";
+
+        // 2. Initialisation des soldes Safe Savings
+        if (userActuel.soldeUSD === undefined) userActuel.soldeUSD = 0;
+        if (userActuel.soldeCDF === undefined) userActuel.soldeCDF = 0;
+
+        if (userActuel.simMobileMoneyUSD === undefined) userActuel.simMobileMoneyUSD = 300;
+        if (userActuel.simMobileMoneyCDF === undefined) userActuel.simMobileMoneyCDF = 150000;
+
+        let soldeUSD_txt = document.getElementById("solde-usd");
+        let soldeCDF_txt = document.getElementById("solde-cdf");
+
+        function rafraichirSoldesVisuels() {
+            soldeUSD_txt.textContent = userActuel.soldeUSD + " USD";
+            soldeCDF_txt.textContent = userActuel.soldeCDF + " CDF";
+
+            let infoMobile = document.getElementById("dispo-mobile-money");
+            if (infoMobile && typeActionActuelle === "recharger") {
+                infoMobile.textContent = `Disponible sur votre Téléphone : ${userActuel.simMobileMoneyUSD} USD | ${userActuel.simMobileMoneyCDF} CDF`;
+            }
+        }
+        rafraichirSoldesVisuels();
+
+        // 3. Affichage du formulaire 
+        function ouvrirFormulaire(type) {
+            typeActionActuelle = type;
+            let titre = document.getElementById("titre-transaction");
+            let conteneurGlobal = document.getElementById("bloc-contenir");
+            let infoMobile = document.getElementById("dispo-mobile-money");
+
+            if (type === "recharger") {
+                titre.textContent = "Recharger votre compte";
+                if (infoMobile) {
+                    infoMobile.textContent = `Disponible sur votre Téléphone : ${userActuel.simMobileMoneyUSD} USD | ${userActuel.simMobileMoneyCDF} CDF`;
+                }
+            }
+            else {
+                titre.textContent = "Effectuer un Retrait";
+                if (infoMobile) {
+                    infoMobile.textContent = `L'argent sera versé sur votre compte Mobile Money.`;
+                }
+            }
+            // On force le display en flex inline 
+            conteneurGlobal.style.display = "flex";
+        }
+        window.ouvrirFormulaire = ouvrirFormulaire;
+
+        // 4. Pour valider la transaction
+        document.getElementById("btn-valider-trans").addEventListener("click", function () {
+            let montant = Number(document.getElementById("montant-trans").value);
+            let devise = document.getElementById("devise-trans").value;
+
+            if (isNaN(montant) || montant <= 0) {
+                alert("Veuillez entrer un montant valide supérieur à 0.");
+                return;
+            }
+
+            // PRÉPARATION DES TEXTES DE L'HISTORIQUE 
+            let aujourdHui = new Date();
+            let dateFormatee = aujourdHui.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+            let texteJournal = "";
+
+            if (typeActionActuelle === "recharger") {
+                if (devise === "USD") {
+                    if (userActuel.simMobileMoneyUSD < montant) {
+                        alert("Solde insuffisant sur votre compte Mobile Money !");
+                        return;
+                    }
+                    userActuel.simMobileMoneyUSD -= montant;
+                    userActuel.soldeUSD += montant;
+                }
+                else {
+                    if (userActuel.simMobileMoneyCDF < montant) {
+                        alert("Solde insuffisant sur votre compte Mobile Money !");
+                        return;
+                    }
+                    userActuel.simMobileMoneyCDF -= montant;
+                    userActuel.soldeCDF += montant;
+                }
+                texteJournal = `Le ${dateFormatee}, vous avez rechargé votre portefeuille de ${montant} ${devise}.`;
+                alert(`Compte rechargé avec succès de ${montant} ${devise} !`);
+            }
+            else if (typeActionActuelle === "retrait") {
+                if (devise === "USD") {
+                    if (userActuel.soldeUSD < montant) {
+                        alert("Solde USD insuffisant ! ");
+                        return;
+                    }
+                    userActuel.soldeUSD -= montant;
+                    userActuel.simMobileMoneyUSD += montant;
+                }
+                else {
+                    if (userActuel.soldeCDF < montant) {
+                        alert("Solde CDF insuffisant ! ");
+                        return;
+                    }
+                    userActuel.soldeCDF -= montant;
+                    userActuel.simMobileMoneyCDF += montant;
+                }
+                texteJournal = `Le ${dateFormatee}, vous avez retiré ${montant} ${devise} de votre portefeuille.`;
+                alert(`Retrait de ${montant} ${devise} effectué !`);
+            }
+
+            // ENREGISTREMENT DANS L'HISTORIQUE PERMANENT 
+            if (!userActuel.notifications) {
+                userActuel.notifications = [];
+            }
+            userActuel.notifications.push({
+                texte: texteJournal,
+                type: "historique_permanent",
+                statut: "termine"
+            });
+
+            // Sauvegarde de l'armoire globale (utilisateurs)
+            localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+
+            // Synchronisation de la session actuelle (utilisateur)
+            utilisateur.soldeUSD = userActuel.soldeUSD;
+            utilisateur.soldeCDF = userActuel.soldeCDF;
+            utilisateur.simMobileMoneyUSD = userActuel.simMobileMoneyUSD;
+            utilisateur.simMobileMoneyCDF = userActuel.simMobileMoneyCDF;
+            utilisateur.notifications = userActuel.notifications; // Synchronisation cruciale ici
+            localStorage.setItem("utilisateur", JSON.stringify(utilisateur));
+
+            document.getElementById("montant-trans").value = "";
+            document.getElementById("bloc-contenir").style.display = "none"; // On recache
+            rafraichirSoldesVisuels();
+        });
+    </script>
+</body>
+
+</html>

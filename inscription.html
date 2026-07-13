@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Savings</title>
+    <link rel="shortcut icon" href="logo1.png">
+    <link rel="stylesheet" href="inscription.css">
+</head>
+
+<body>
+    <form action="">
+        <h2>Bienvenue dans le formulaire d'inscription !</h2>
+        <h3>Merci de remplir les informations demandées</h3>
+        <p class="connexion">Vous avez déjà un compte ?<a href="connexion.html"> Connectez-vous</a></p>
+        <label for="Prenom">Prénom :</label>
+        <input class="renseignement" type="text" id="prenom" placeholder="Entrez votre Prénom">
+        <br>
+        <label for="nom">Nom :</label>
+        <input class="renseignement" type="text" id="nom" placeholder="Entrez votre Nom">
+        <br>
+        <label for="nomu">Nom d'utilisateur :</label>
+        <input class="renseignement" type="text" id="nomu" placeholder="Choisissez un nom d'utilisateur">
+        <br>
+        <label for="genre">Genre :</label>
+        <input class="renseignement" type="radio" name="type" value="Homme" id="genre">Homme</input>
+        <input type="radio" name="type" value="Femme" id="genre">Femme</input>
+        <br>
+        <label for="ndt">Numéro de téléphone</label>
+        <input class="renseignement" type="tel" id="ndt" placeholder="Entrez votre numéro de téléphone">
+        <br>
+        <label for="email">Email :</label>
+        <input class="renseignement" type="email" id="email" placeholder="Entrez votre Email">
+        <br>
+        <label for="mdp">Mot de passe :</label>
+        <input class="renseignement" type="password" id="mdp" placeholder="Entrez un mot de passe">
+        <br>
+        <label for="cmdp">Confirmez votre mot de passe :</label>
+        <input class="renseignement" type="password" id="cmdp" placeholder="Entrez votre mot de passe">
+        <br>
+        <input class="sbt" id="sbt" type="submit" value="Créer mon compte">
+    </form>
+    <script>
+        let bouton = document.getElementById("sbt")
+        bouton.addEventListener("click", function (creer) {
+            creer.preventDefault(); //preventDefault sert à empêcher le fonctionnement normal de l'élément
+            let prenom = document.getElementById("prenom").value;
+            let nom = document.getElementById("nom").value;
+            let nomu = document.getElementById("nomu").value;
+            let genre = document.getElementById("genre").value;
+            let ndt = document.getElementById("ndt").value;
+            let mdp = document.getElementById("mdp").value;
+            let cmdp = document.getElementById("cmdp").value;
+
+            if (prenom === "" || nom === "" || nomu === "" || genre === "" || ndt === "" || mdp === "") {
+                alert("Veuillez remplir tous les champs");
+            }
+            else if (mdp !== cmdp) {
+                alert("Les mots de passe ne correspondent pas");
+            }
+            else {
+                let utilisateurs = JSON.parse(localStorage.getItem("utilisateurs")) || [];//JSON.parse sert à convertir du texte en objet javascript
+
+                // Vérifier si le nom d'utilisateur existe déjà
+                let existe = utilisateurs.find(function (user) {
+                    return user.nomu === nomu;
+                });
+                if (existe) {
+                    alert("Ce nom d'utilisateur est déjà utilisé.");
+                    return;
+                }
+                let infos = {
+                    prenom: prenom,
+                    nom: nom,
+                    nomu: nomu,
+                    genre: genre,
+                    ndt: ndt,
+                    mdp: mdp,
+                    notifications: []
+                };
+
+                utilisateurs.push(infos);
+
+                localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+                // utilisateur actuellement connecté
+                localStorage.setItem("utilisateur", JSON.stringify(infos));
+
+                alert("Compte créé avec succès");
+                setTimeout(function () { window.location.href = "accueil.html" }, 1000);
+            }
+        }
+        )
+    </script>
+</body>
+
+</html>

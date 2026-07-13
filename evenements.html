@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Savings</title>
+    <link rel="shortcut icon" href="logo1.png">
+    <link rel="stylesheet" href="evenements.css">
+</head>
+
+<body>
+    <header>
+        <section class="Barre_en_haut">
+            <a class="retour" href="accueil.html">
+                <h4> &#8617;Retour</h4>
+            </a>
+            <span class="trois_barres"> <a href="compte.html"><img src="trois_barres.png" alt=""></a> </span>
+        </section>
+    </header>
+
+    <main>
+        <section class="Bloc_en_bas">
+            <h1> Événements, Cagnottes & Caisses Privées</h1>
+
+            <section class="cartes-evenements">
+            </section>
+            <button id="nouvelEvenement">Planifier un événement / caisse privée</button>
+
+        </section>
+
+        <div id="formulaireEvenement"
+            style="display: none; background: #f4f6f9; padding: 20px; border-radius: 10px; margin-top: 20px;">
+            <h2>Créer un Projet Financier</h2>
+
+            <label for="titreEvenement">Titre de l'objectif :</label>
+            <input type="text" id="titreEvenement" placeholder="Ex: Voyage à Dubaï, Achat Ordinateur, Mariage...">
+            <br><br>
+
+            <label for="typeEvent">Type de projet :</label>
+            <select id="typeEvent">
+                <option value="Caisse_Privat">🔒 Caisse Individuelle Privée (Épargne)</option>
+                <option value="Mariage">👰 Mariage (Cagnotte commune)</option>
+                <option value="Anniversaire">🎂 Anniversaire (Cagnotte commune)</option>
+                <option value="Solidarité">🤝 Soutien & Solidarité (Cagnotte commune)</option>
+                <option value="Fête">🥳 Fête / Autre</option>
+            </select>
+            <br><br>
+
+            <label for="descriptionEvent">Description:</label>
+            <textarea id="descriptionEvent" placeholder="Expliquez l'objectif de ce projet..."></textarea>
+            <br><br>
+
+            <label for="montantCible">Objectif financier à atteindre :</label>
+            <input type="number" id="montantCible" placeholder="Ex: 1000">
+            <br><br>
+
+            <label for="deviseEvent">Devise :</label>
+            <select id="deviseEvent">
+                <option value="USD">USD ($)</option>
+                <option value="CDF">CDF (FC)</option>
+            </select>
+            <br><br>
+
+            <label for="dateLimite">Date cible :</label>
+            <input type="date" id="dateLimite">
+            <br><br>
+
+            <button id="btn-creer-event">Lancer le projet</button>
+        </div>
+    </main>
+
+    <script src="evenements.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+body {
+    background-color: #0a1f44;
+    margin: 0;
+}
+
+.Barre_en_haut {
+    display: flex;
+    justify-content: space-around;
+}
+
+.trois_barres {
+    margin-top: 20px;
+}
+
+.retour {
+    text-decoration: none;
+    margin-top: 12px;
+    color: white;
+
+}
+
+.Barre_en_haut img {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+}
+
+.Bloc_en_bas {
+    background-color: white;
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-left: 35px;
+    padding-bottom: 30%;
+
+}
+
+.Bloc_en_bas h1,
+.Bloc_en_bas h2,
+.Bloc_en_bas h3 {
+    text-align: center;
+
+}
+
+.img1 {
+    width: 200px;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+.Bloc_en_bas button {
+    background-color: #0a1f44;
+    width: 80px;
+    height: 20px;
+    border: #0a1f44 solid 2px;
+    border-radius: 20px;
+    color: white;
+    margin-top: 20px;
+    margin-left: 47%;
+    cursor: pointer;
+}
+
+.img2 {
+    width: 500px;
+    height: auto;
+    float: right;
+    margin-top: 5%;
+}

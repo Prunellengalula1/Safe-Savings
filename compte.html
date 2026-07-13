@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Savings</title>
+    <link rel="shortcut icon" href="logo1.png">
+    <link rel="stylesheet" href="compte.css">
+
+</head>
+
+<body>
+    <header class="Barre_en_haut">
+        <a class="retour" href="accueil.html">
+            <h4> &#8617;Retour</h4>
+        </a>
+        <span class="trois_barres"> <a href="compte.html"><img src="trois_barres.png" alt=""></a> </span>
+    </header>
+    <main class="Bloc_en_bas">
+        <img src="compte.png" alt="photodeprofil" id="cmpt">
+        <h1 id="identite">Prénom Nom</h1>
+
+        <section class="menu">
+
+
+            <a href="profil.html">
+                <section>
+                    <img src="profil.png" alt="">
+                </section>
+                Mon profil
+            </a>
+
+            <a href="tontines.html">
+                <section>
+                    <img src="progression.png" alt="">
+                </section> Mes tontines
+            </a>
+
+            <a href="porte-feuille.html">
+                <section>
+                    <img src="portemonnaie.png" alt="">
+                </section>Mon porte-monnaie
+            </a>
+
+            <a href="evenements.html">
+                <section>
+                    <img src="calendrier.png" alt="calendrier">
+                </section>Mes évènements
+            </a>
+
+            <a href="parametres.html">
+                <section>
+                    <img src="paramètre.png" alt="Paramètre">
+                </section>Paramètres
+            </a>
+
+            <a href="aide.html">
+                <section>
+                    <img src="aide.png" alt="Aide">
+                </section> Aide
+            </a>
+
+            <a href="#" id="deconnexion">
+                <section>
+                    <img src="croix.png" alt="déconnexion">
+                </section>Déconnexion
+            </a>
+
+        </section>
+    </main>
+    <script>
+        let utilisateur = JSON.parse(localStorage.getItem("utilisateur"));
+        // Au cas où il n'y avait pas de compte enregistré
+        if (!utilisateur) {
+            alert("Vous n'êtes pas connecté");
+            window.location.href = "connexion.html";
+        }
+
+        // Pour mettre l'identité
+        let identite = document.getElementById("identite");
+        identite.textContent = `${utilisateur.prenom} ${utilisateur.nom}`;
+
+        // Pour que l'utilisateur se déconnecte
+        let deconnexion = document.getElementById("deconnexion");
+        deconnexion.addEventListener("click", function () {
+            localStorage.removeItem("utilisateur");
+            alert("Vous êtes déconnecté");
+            window.location.href = "connexion.html"
+        });
+    </script>
+
+</body>
+
+</html>

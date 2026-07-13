@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Savings - Notifications</title>
+    <link rel="shortcut icon" href="logo1.png">
+    <link rel="stylesheet" href="notifications.css">
+</head>
+
+<body>
+    <header class="Barre_en_haut">
+        <a class="retour" href="accueil.html">
+            <h4> &#8617;Retour</h4>
+        </a>
+        <span class="trois_barres"> <a href="compte.html"><img src="trois_barres.png" alt=""></a> </span>
+    </header>
+
+    <main class="Bloc_en_bas">
+        <section class="titre">
+            <h1>Notifications & Historique</h1>
+
+            <div class="section-notif">
+                <h2>📩 Invitations en attente</h2>
+                <div id="zone-invitations">
+
+                </div>
+            </div>
+
+            <div class="section-notif">
+                <h2>📜 Historique de vos activités</h2>
+                <div id="zone-historique">
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // FONCTION : AFFICHER LES NOTIFICATIONS & HISTORIQUE
+
+        function afficherNotifications() {
+            let utilisateur = JSON.parse(localStorage.getItem("utilisateur"));
+            let utilisateurs = JSON.parse(localStorage.getItem("utilisateurs")) || [];
+
+            let zoneInvits = document.getElementById("zone-invitations");
+            let zoneHist = document.getElementById("zone-historique");
+
+            if (!utilisateur || !zoneInvits || !zoneHist) return;
+
+            // Récupérer le compte mis à jour depuis la liste globale
+            let userActuel = utilisateurs.find(u => u.nomu === utilisateur.nomu || u.nom === utilisateur.nomu || u.username === utilisateur.nomu);
+
+            if (!userActuel || !userActuel.notifications) {
+                zoneInvits.innerHTML = "<p>Aucune invitation</p>";
+                zoneHist.innerHTML = "<p>Aucun historique disponible.</p>";
+                return;
+            }
+
+            let contenuInvitations = "";
+            let contenuHistorique = "";
+
+            let aDesInvitations = false;
+            let aDeLHistorique = false;
+
+            // On parcourt TOUTES les notifications de l'utilisateur
+            userActuel.notifications.forEach((notif, index) => {
+
+                // CAS A : C'est une invitation en attente d'action
+                if (notif.statut === "en_attente") {
+                    aDesInvitations = true;
+
+                    if (notif.type === "invitation_cagnotte") {
+                        contenuInvitations += `
+                        <div class="carte-notif">
+                            <p class="texte-notif">📩 ${notif.texte}</p>
+                            <section class="optioninv">
+                                <button class="accepter" onclick="accepterInvitation('${notif.idInvitation}', '${notif.idCagnotte}')" >Accepter</button>
+                                <button class="refuser" onclick="refuserInvitation('${notif.idInvitation}', '${notif.idCagnotte}')">Refuser</button>
+                            </section>
+                        </div>
+                        `;
+                    } else {
+                        // Pour les tontines
+                        contenuInvitations += `
+                        <div class="carte-notif">
+                            <p class="texte-notif">👥 ${notif.createur} vous a invité dans la tontine "${notif.tontine}"</p>
+                            <section class="optioninv">
+                                <button class="accepter" onclick="traiterInvitation('${index}', 'Accepté')" >Accepter</button>
+                                <button class="refuser" onclick="traiterInvitation('${index}', 'Refuser')" >Refuser</button>
+                            </section>
+                        </div>
+                        `;
+                    }
+                }
+                // CAS B : C'est un message historique permanent (Don, Retrait, Acceptation passée)
+                else if (notif.type === "historique_permanent" || notif.statut === "accepte" || notif.statut === "Accepté" || notif.statut === "refuse" || notif.statut === "Refuser") {
+                    aDeLHistorique = true;
+
+                    // On adapte le texte si c'est une ancienne notification d'invitation tontine transformée en historique
+                    let texteAffichage = notif.texte;
+                    if (!texteAffichage && notif.tontine) {
+                        texteAffichage = `Vous avez ${notif.statut.toLowerCase()} l'invitation pour la tontine "${notif.tontine}".`;
+                    }
+                    let couleurBordure;
+
+                    if (notif.statut === "refuse" || notif.statut === "Refuser") {
+                        couleurBordure = "#dc3545"; //(rouge)
+                    } else {
+                        couleurBordure = "#27ae60"; //(vert)
+                    }
+
+                    contenuHistorique += `
+                    <div class="carte-historique" style="border-left-color: ${couleurBordure}">
+                        <p class="texte-notif">📝 ${texteAffichage}</p>
+                    </div>
+                    `;
+                }
+            });
+
+            // Injections HTML
+            if (aDesInvitations) {
+                zoneInvits.innerHTML = contenuInvitations;
+            } else {
+                zoneInvits.innerHTML = "<p>Aucune invitation en attente.</p>";
+            }
+
+            if (aDeLHistorique) {
+                zoneHist.innerHTML = contenuHistorique;
+            } else {
+                zoneHist.innerHTML = "<p >Votre journal d'activités est vide.</p>";
+            }
+        }
+        // FONCTION : TRAITER INVITATION (TONTINES)
+
+        function traiterInvitation(index, actionChoisie) {
+            let utilisateur = JSON.parse(localStorage.getItem("utilisateur"));
+            let utilisateurs = JSON.parse(localStorage.getItem("utilisateurs")) || [];
+            let tontines = JSON.parse(localStorage.getItem("tontines")) || [];
+
+            let userActuel = utilisateurs.find(u => u.nomu === utilisateur.nomu);
+            if (!userActuel) return;
+
+            let laNotif = userActuel.notifications[index];
+            if (laNotif) {
+                laNotif.statut = actionChoisie;
+                // On génère un texte propre pour son historique permanent
+                let aujourdHui = new Date();
+                let dateFormatee = aujourdHui.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+                laNotif.texte = `Le ${dateFormatee}, vous avez ${actionChoisie.toLowerCase()} rejoint la tontine "${laNotif.tontine}" de ${laNotif.createur}.`;
+                laNotif.type = "historique_permanent"; // Devient permanent
+            }
+
+            let nomMeteo = laNotif.tontine;
+            let tontineTrouvee = tontines.find(function (t) { return t.nomtontine === nomMeteo; });
+            if (tontineTrouvee) {
+                let membreDansTontine = tontineTrouvee.membres.find(function (m) { return m.nom === userActuel.nomu; });
+                if (membreDansTontine) {
+                    membreDansTontine.statut = actionChoisie;
+                }
+            }
+            localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+            localStorage.setItem("tontines", JSON.stringify(tontines));
+            localStorage.setItem("utilisateur", JSON.stringify(userActuel));
+
+            alert("Invitation traitée !");
+            window.location.reload();
+        }
+        window.traiterInvitation = traiterInvitation;
+
+        // FONCTION : ACCEPTER INVITATION (CAGNOTTE)
+
+        function accepterInvitation(idInvitation, idCagnotte) {
+            let utilisateursList = JSON.parse(localStorage.getItem("utilisateurs")) || [];
+            let evenementsList = JSON.parse(localStorage.getItem("evenements")) || [];
+            let moiConnecte = JSON.parse(localStorage.getItem("utilisateur"));
+
+            if (!moiConnecte) return;
+            let monNom = moiConnecte.nomu || moiConnecte.nom || moiConnecte.username;
+
+            let evenement = evenementsList.find(e => e.id === Number(idCagnotte));
+            if (!evenement) {
+                alert("Cette cagnotte n'existe plus.");
+                return;
+            }
+
+            if (!evenement.invites) evenement.invites = [];
+            if (!evenement.invites.includes(monNom)) {
+                evenement.invites.push(monNom);
+            }
+            if (evenement.invitationsEnAttente) {
+                evenement.invitationsEnAttente = evenement.invitationsEnAttente.filter(name => name !== monNom);
+            }
+
+            let monCompteGlobal = utilisateursList.find(u => u.nomu === monNom || u.nom === monNom || u.username === monNom);
+            if (monCompteGlobal && monCompteGlobal.notifications) {
+                let notif = monCompteGlobal.notifications.find(n => n.idInvitation === Number(idInvitation));
+                if (notif) {
+                    let aujourdHui = new Date();
+                    let dateFormatee = aujourdHui.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+                    notif.statut = "accepte";
+                    notif.type = "historique_permanent"; // Devient figé dans l'historique
+                    notif.texte = `Le ${dateFormatee}, vous avez accepté de rejoindre la cagnotte de solidarité "${evenement.titre}" de ${evenement.createur}.`;
+                }
+                moiConnecte.notifications = monCompteGlobal.notifications;
+            }
+
+            localStorage.setItem("evenements", JSON.stringify(evenementsList));
+            localStorage.setItem("utilisateurs", JSON.stringify(utilisateursList));
+            localStorage.setItem("utilisateur", JSON.stringify(moiConnecte));
+
+            alert("Invitation acceptée !");
+            window.location.reload();
+        }
+        window.accepterInvitation = accepterInvitation;
+
+        // FONCTION : REFUSER INVITATION (CAGNOTTE)
+
+        function refuserInvitation(idInvitation, idCagnotte) {
+            let utilisateursList = JSON.parse(localStorage.getItem("utilisateurs")) || [];
+            let evenementsList = JSON.parse(localStorage.getItem("evenements")) || [];
+            let moiConnecte = JSON.parse(localStorage.getItem("utilisateur"));
+
+            if (!moiConnecte) return;
+            let monNom = moiConnecte.nomu || moiConnecte.nom || moiConnecte.username;
+
+            let evenement = evenementsList.find(e => e.id === Number(idCagnotte));
+            if (evenement && evenement.invitationsEnAttente) {
+                evenement.invitationsEnAttente = evenement.invitationsEnAttente.filter(name => name !== monNom);
+            }
+
+            let monCompteGlobal = utilisateursList.find(u => u.nomu === monNom || u.nom === monNom || u.username === monNom);
+            if (monCompteGlobal && monCompteGlobal.notifications) {
+                let notif = monCompteGlobal.notifications.find(n => n.idInvitation === Number(idInvitation));
+                if (notif) {
+                    let aujourdHui = new Date();
+                    let dateFormatee = aujourdHui.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+                    notif.statut = "refuse";
+                    notif.type = "historique_permanent";
+                    notif.texte = `Le ${dateFormatee}, vous avez refusé de rejoindre la cagnotte "${evenement ? evenement.titre : 'Inconnue'}".`;
+                }
+                moiConnecte.notifications = monCompteGlobal.notifications;
+            }
+
+            localStorage.setItem("evenements", JSON.stringify(evenementsList));
+            localStorage.setItem("utilisateurs", JSON.stringify(utilisateursList));
+            localStorage.setItem("utilisateur", JSON.stringify(moiConnecte));
+
+            alert("Invitation refusée.");
+            window.location.reload();
+        }
+        window.refuserInvitation = refuserInvitation;
+
+        // Lancement immédiat
+        afficherNotifications();
+    </script>
+</body>
+
+</html>

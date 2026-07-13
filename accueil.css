@@ -1,0 +1,227 @@
+body {
+    margin: 0;
+}
+
+.Barre_en_haut {
+    background-color: #0a1f44;
+    color: white;
+    border-radius: 0 0 20px 20px;
+    padding: 30px;
+}
+
+.profil {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.profil h1 {
+    margin: 0;
+}
+
+.profil a {
+    text-decoration: none;
+    color: white;
+    text-align: center;
+}
+
+.profil img {
+    width: 80px;
+    height: auto;
+}
+
+.dans_barre_en_haut {
+    background-color: green;
+    width: 90%;
+    max-width: 500px;
+    margin: 40px auto 0 auto;
+    border-radius: 15px;
+    text-align: center;
+    padding: 20px;
+}
+
+.dans_barre_en_haut img {
+    width: 200px;
+    height: auto;
+}
+
+.Bloc_en_bas {
+    padding: 20px;
+}
+
+.aperçu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 900px;
+    margin: auto;
+}
+
+.minibloc1,
+.minibloc2 {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    box-sizing: border-box;
+}
+
+.minibloc1 {
+    background-color: #0a1f44;
+    border: #0a1f44 solid 2px;
+}
+
+.minibloc2 {
+    border: orangered solid 2px;
+    background-color: orangered;
+}
+
+#wallet-btn {
+    cursor: pointer;
+}
+
+.voir_détails {
+    text-align: right;
+}
+
+.voir_détails a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+#formulaire-activation-wallet {
+    display: none;
+    border: #0a1f44 solid 1px;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+#formulaire-activation-wallet h4 {
+    text-align: center;
+}
+
+#formulaire-activation-wallet input {
+    padding: 10px;
+    border-radius: 8px;
+    border: #0a1f44 solid 1px;
+    margin-top: 2%;
+}
+
+#formulaire-activation-wallet select {
+    border: #0a1f44 solid 1px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#formulaire-activation-wallet button {
+    color: white;
+    background-color: #0a1f44;
+    border-radius: 10px;
+    border: white solid 2px;
+    padding: 10px;
+    margin-top: 3%;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+#formulaire-activation-wallet button:hover {
+    transform: translateY(-3px);
+    color: #0a1f44;
+    background: #ffd166;
+}
+
+.action {
+    display: flex;
+    justify-content: space-evenly;
+    cursor: pointer;
+}
+
+.menu {
+    width: 90%;
+    max-width: 900px;
+    margin: 30px auto;
+    border: solid 2px black;
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.icones {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    margin: 0 0 15px 0;
+}
+
+.icones a {
+    list-style: none;
+}
+
+.icones img {
+    width: 50px;
+    height: 50px;
+}
+
+.options {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.options a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+
+}
+
+#notification {
+    margin-left: 85px;
+}
+
+@media (max-width: 768px) {
+    .profil {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .profil h1 {
+        text-align: center;
+    }
+
+    .aperçu {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .options {
+        font-size: 12px;
+    }
+
+    .icones img {
+        width: 40px;
+        height: 40px;
+    }
+
+}
+
+.actif {
+    background-color: green !important;
+    border: green solid 2px;
+}
+
+.inactif {
+    background-color: orangered !important;
+    border: orangered solid 2px;
+}

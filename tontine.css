@@ -1,0 +1,345 @@
+body {
+    background-color: #0a1f44;
+    margin: 0;
+}
+
+.Barre_en_haut {
+    display: flex;
+    justify-content: space-around;
+}
+
+.trois_barres {
+    margin-top: 20px;
+}
+
+.retour {
+    text-decoration: none;
+    margin-top: 12px;
+    color: white;
+
+}
+
+.Barre_en_haut img {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+}
+
+.Bloc_en_bas {
+    background-color: white;
+    border-radius: 20px;
+    padding-top: 8px;
+    padding-left: 35px;
+    padding-bottom: 5%;
+}
+
+.titre {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.titre h1 {
+    color: #0a1f44;
+    font-size: 40px;
+}
+
+.titre h3 {
+    color: gray;
+    font-weight: normal;
+}
+
+.cartes {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.tontine1 {
+    width: 320px;
+    min-height: 30vh;
+    border: 2px solid #0a1f44;
+    background-color: #0a1f44;
+    border-radius: 20px;
+    color: white;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.tontine1:hover {
+    transform: translateY(-5px);
+}
+
+.tontine1 h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.tontine1 h3 {
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+details {
+    background-color: rgb(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 8px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    margin: 12px 0;
+}
+
+details details {
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+p {
+    margin-left: 15px;
+}
+
+#indication {
+    color: #0a1f44;
+}
+
+b {
+    color: #ffd166;
+}
+
+progress {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #27ae60;
+    border-radius: 10px;
+}
+
+.btn-cotiser {
+    display: block;
+    background-color: white;
+    color: #0a1f44;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    margin: 30px auto;
+}
+
+.btn-cotiser:hover:not([disabled]) {
+    transform: translateY(-3px);
+    color: #0a1f44;
+    background: #ffd166;
+}
+
+.btn-cotiser:disabled:hover {
+    transform: none;
+    color: #0a1f44;
+    background: #27ae60 !important;
+    color: white !important;
+    cursor: not-allowed !important;
+}
+
+
+.btn-cotiser[disabled],
+.btn-cotiser:disabled {
+    background-color: #27ae60 !important;
+    color: white !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    opacity: 0.9;
+}
+
+/* ------------------ */
+/* Création tontine */
+/* ------------------ */
+#nouvelleTontine {
+    display: block;
+    margin: 30px auto;
+    margin-top: 10%;
+    padding: 15px 15px;
+    background-color: #0a1f44;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#nouvelleTontine:hover {
+    transform: translateY(-3px);
+    color: #0a1f44;
+    background: #ffd166;
+}
+
+#formulaireTontine {
+    display: none;
+}
+
+.création {
+    background-color: white;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 700px;
+    margin: 80px auto;
+    padding: 30px;
+    text-align: center;
+}
+
+.création h2 {
+    color: #0a1f44;
+    margin-bottom: 25px;
+}
+
+.création h3 {
+    color: #555;
+    font-weight: normal;
+    margin-top: 25px;
+}
+
+.création input,
+.création select {
+    width: 80%;
+    max-width: 400px;
+    padding: 12px;
+    margin-top: 10px;
+    border: 2px solid #0a1f44;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.création section {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.création section select {
+    width: 120px;
+}
+
+/* Partie durée et montant */
+
+h4 {
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+}
+
+#ajouterMembre {
+    display: block;
+    color: white;
+    background-color: #0a1f44;
+    font-weight: bold;
+    margin: 30px auto;
+    padding: 15px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: #0a1f44 solid 2px;
+}
+
+#ajouterMembre:hover {
+    transform: translateY(-3px);
+    color: #0a1f44;
+    background: #ffd166;
+}
+
+#montant {
+    display: block;
+    width: 250px;
+    margin: 20px auto 50px auto;
+    padding: 12px;
+    border-radius: 10px;
+    border: #0a1f44 solid 2px;
+}
+
+#modifier {
+    display: block;
+    color: #0a1f44;
+    background-color: white;
+    font-weight: bold;
+    margin: 30px auto;
+    padding: 15px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: #0a1f44 solid 2px;
+}
+
+#modifier:hover {
+    transform: translateY(-3px);
+    color: #0a1f44;
+    background: #ffd166;
+}
+
+#supprimer {
+    display: block;
+    color: #0a1f44;
+    background-color: white;
+    font-weight: bold;
+    margin: 30px auto;
+    padding: 15px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: #0a1f44 solid 2px;
+}
+
+#supprimer:hover {
+    transform: translateY(-3px);
+    color: #0a1f44;
+    background: #ffd166;
+}
+
+/* Bouton futur */
+
+.btn-creer {
+    display: block;
+    margin: 30px auto;
+    padding: 15px 30px;
+    background-color: #0a1f44;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-creer:hover {
+    transform: translateY(-3px);
+    color: #0a1f44;
+    background: #ffd166;
+}
+
+details img {
+    width: 30px;
+    height: auto;
+    vertical-align: middle;
+
+}

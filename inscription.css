@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    background: #0a1f44;
+}
+
+form {
+    background-color: white;
+    margin-top: 100px;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 20px;
+}
+
+h2 {
+    text-align: center;
+    color: green;
+}
+
+.connexion,
+h3 {
+    text-align: center;
+}
+
+.renseignement {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    padding-right: 25px;
+    border: solid #0a1f44 5px;
+}
+
+.sbt {
+    margin-left: 40%;
+    border: #0a1f44 solid 2px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #0a1f44;
+    color: white;
+    cursor: pointer;
+}
+
+.sbt:hover {
+    background-color: green;
+    border: solid green 2px;
+}

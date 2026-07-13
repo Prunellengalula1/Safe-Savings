@@ -1,0 +1,47 @@
+body {
+    background-color: #1e4890;
+    margin: 0;
+}
+
+form {
+    background-color: white;
+    margin-top: 70px;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+h3,
+.inscription {
+    text-align: center;
+}
+
+
+h2 {
+    text-align: center;
+    color: green;
+}
+
+
+.renseignement {
+    border: solid #0a1f44 3px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#sbt {
+    margin-left: 47%;
+    border: #0a1f44 solid 2px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #0a1f44;
+    color: white;
+    cursor: pointer;
+}
+
+#sbt:hover {
+    background-color: green;
+    border: green solid 2px;
+}

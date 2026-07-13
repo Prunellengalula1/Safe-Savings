@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Savings</title>
+    <link rel="shortcut icon" href="logo1.png">
+    <link rel="stylesheet" href="accueil.css">
+
+</head>
+
+<body>
+    <header class="Barre_en_haut">
+        <section class="profil">
+            <h1 id="bienvenue"></h1>
+            <a href="profil.html">
+                <img class="Voir_mon_profil" src="profil.png" alt="photo de profil">
+                <h4 class="Voir_mon_profil">Voir mon profil</h4>
+            </a>
+        </section>
+        <div id="infosProfil"></div>
+
+        <section class="dans_barre_en_haut">
+            <h3>Créer ma tontine</h3>
+            <a href="tontines.html"><img class="Créer_ma_tontine" src="orangeplus.png"
+                    alt="bouton fonctionnel avec + dedans"></a>
+            <h4>Lancez votre cercle en quelques minutes avec vos proches</h4>
+        </section>
+    </header>
+    <main class="Bloc_en_bas">
+        <section class="aperçu">
+            <h3>Aperçu</h3>
+            <p id="date">(date du jour) </p>
+        </section>
+        <section class="minibloc1">
+            <h3>Centre d'aide</h3>
+            <p>Vous avez une question ? Nous avons la réponse !</p>
+            <p class="voir_détails"><a href="aide.html">Voir les détails</a></p>
+        </section>
+
+        <section class="minibloc2">
+            <h3 id="wallet-btn">Activer mon porte-monnaie</h3>
+            <p>Indispensable pour sécuriser vos transactions</p>
+            <p class="voir_détails"> <a href="porte-feuille.html">Démarrer</a></p>
+        </section>
+        <section id="formulaire-activation-wallet">
+            <h4>Configuration de votre Mobile Money</h4>
+            <label for="operateur-select">Choisir l'opérateur :</label>
+            <select id="operateur-select">
+                <option value="M-Pesa">M-Pesa (Vodacom)</option>
+                <option value="Orange">Orange Money</option>
+                <option value="Airtel">Airtel Money</option>
+            </select>
+            <br>
+            <label for="numero-momo">Numéro Mobile Money :</label>
+            <input type="text" id="numero-momo" placeholder="Ex: 081234567" maxlength="10">
+            <br>
+            <section class="action">
+                <button id="btn-confirmer-activation">Confirmer et Activer</button>
+                <button id="btn-annuler-activation">Annuler</button>
+            </section>
+        </section>
+
+        <section class="menu">
+            <section class="dans_menu">
+                <ul class="icones">
+                    <a href="evenements.html"><img src="calendrier2.png" alt="calendrier"></a>
+                    <a href="porte-feuille.html"><img src="portemonnaie.png" alt="porte-monnaie"></a>
+                    <a href="#"><img src="progression.png" alt="progression"></a>
+                    <a href="notifications.html"><img src="notification.png" alt="notification"></a>
+                    <a href="compte.html"><img src="compte.png" alt="compte"></a>
+                </ul>
+
+                <ul class="options">
+                    <li><a id="evenements" href="evenements.html">Événements</a></li>
+                    <li><a id="porte-feuille" href="porte-feuille.html">Trousse</a></li>
+                    <li id="espace"> </li>
+                    <li><a id="notification" href="notifications.html">Notifications</a></li>
+                    <li><a id="compte" href="compte.html">Compte</a></li>
+                </ul>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        // Pour empêcher que l'utilisateur accède à la page de son compte sans s'être connecté au préalable
+        let utilisateur = JSON.parse(localStorage.getItem("utilisateur"));
+
+        if (!utilisateur) {
+            alert("Vous n'êtes pas connécté à votre compte");
+            window.location.href = "connexion.html"
+        }
+        // Pour mettre le prénom de l'utilisateur
+        let bienvenue = document.getElementById("bienvenue");
+        bienvenue.textContent = `Ravie de vous accueillir ${utilisateur.prenom} !`;
+
+        // Pour ajouter l'email ou le numéro de téléphone après avoir coché
+        let infosProfil = document.getElementById("infosProfil");
+
+        let contenu = "";
+        if (utilisateur.emailVisible) {
+            contenu += `<p>Email : ${utilisateur.email}</p>`;
+        }
+        if (utilisateur.telVisible) {
+            contenu += `<p>Téléphone : ${utilisateur.telephone}</p>`;
+        }
+        infosProfil.innerHTML = contenu;
+
+        // Pour mettre la date
+        let aujourdhui = new Date();
+        document.getElementById("date").textContent = aujourdhui.toLocaleDateString("fr-FR");
+
+        // Pour activer le portemonnaie
+        let walletBtn = document.getElementById("wallet-btn");
+        let container = document.querySelector(".minibloc2");
+
+        function etat_portemonnaie() {
+            let utilisateurs = JSON.parse(localStorage.getItem("utilisateurs")) || [];
+            let userActuel = utilisateurs.find(u => u.nomu === utilisateur.nomu);
+            if (userActuel && userActuel.portemonnaieActive === true) {
+                walletBtn.textContent = "Voir votre porte-monnaie";
+                container.classList.add("actif");
+                container.classList.remove("inactif");
+
+            }
+            else {
+                walletBtn.textContent = "Activer mon porte-monnaie";
+                container.classList.add("inactif");
+                container.classList.remove("actif");
+            }
+        }
+        // afficher état au changement 
+        etat_portemonnaie();
+
+        // POUR ACTIVER LE MOBILE MONEY
+        let formulaireActivation = document.getElementById("formulaire-activation-wallet");
+        let btnConfirmer = document.getElementById("btn-confirmer-activation");
+        let btnAnnuler = document.getElementById("btn-annuler-activation");
+
+        // Action quand on clique sur le bouton principal (Activer / Voir)
+        walletBtn.addEventListener("click", function () {
+            let utilisateurs = JSON.parse(localStorage.getItem("utilisateurs")) || [];
+            let userActuel = utilisateurs.find(u => u.nomu === utilisateur.nomu);
+
+            // Si le portefeuille est déjà activé pour cet utilisateur, on va sur la page portefeuille
+            if (userActuel && userActuel.portemonnaieActive === true) {
+                window.location.href = "porte-feuille.html";
+            }
+            else {
+                // Sinon, on affiche le formulaire pour l'activer
+                formulaireActivation.style.display = "block";
+            }
+        });
+
+        // Annuler l'activation
+        btnAnnuler.addEventListener("click", function () {
+            formulaireActivation.style.display = "none";
+        });
+
+        // Validation du numéro et de l'opérateur
+        btnConfirmer.addEventListener("click", function () {
+            let operateur = document.getElementById("operateur-select").value;
+            let numero = document.getElementById("numero-momo").value.trim();
+
+            // Vérification de la longueur (Un numéro normal en RDC a 10 chiffres)
+            if (numero.length !== 10 || isNaN(numero)) {
+                alert("Veuillez entrer un numéro valide à 10 chiffres.");
+                return;
+            }
+
+            let prefixe = numero.substring(0, 3); // On prend les 3 premiers chiffres
+            let valide = false;
+
+            if (operateur === "M-Pesa" && ["081", "082", "083"].includes(prefixe)) {
+                valide = true;
+            } else if (operateur === "Orange" && ["080", "084", "085", "089"].includes(prefixe)) {
+                valide = true;
+            } else if (operateur === "Airtel" && ["090", "097", "099"].includes(prefixe)) {
+                valide = true;
+            }
+            if (!valide) {
+                alert(`Le numéro entré ne correspond pas aux préfixes de l'opérateur ${operateur}.`);
+                return;
+            }
+
+            // Si tout est bon, on l'enregistre sur le compte de l'utilisateur
+            let utilisateurs = JSON.parse(localStorage.getItem("utilisateurs")) || [];
+            let userActuel = utilisateurs.find(u => u.nomu === utilisateur.nomu);
+
+            if (userActuel) {
+                userActuel.portemonnaieActive = true;
+                userActuel.momoOperateur = operateur;
+                userActuel.momoNumero = numero;
+
+                // On en profite pour lui lier ses fonds Mobile Money de départ simulés
+                userActuel.simMobileMoneyUSD = 300;
+                userActuel.simMobileMoneyCDF = 150000;
+
+                // Sauvegarde
+                localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+                localStorage.setItem("portemonnaie", "active");
+
+                alert(`Félicitations ! Votre compte Porte-monnaie a été configuré avec succès avec votre numéro ${operateur} (${numero}).`);
+
+                formulaireActivation.style.display = "none";
+                etat_portemonnaie(); // On rappelle pour que ça s'execute
+            }
+        });
+
+    </script>
+
+
+</body>
+
+</html>

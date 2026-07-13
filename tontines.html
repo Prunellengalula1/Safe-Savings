@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Savings</title>
+    <link rel="shortcut icon" href="logo1.png">
+    <link rel="stylesheet" href="tontine.css">
+</head>
+
+<body>
+    <header class="Barre_en_haut">
+        <a class="retour" href="accueil.html">
+            <h4> &#8617;Retour</h4>
+        </a>
+        <span class="trois_barres"> <a href="compte.html"><img src="trois_barres.png" alt=""></a> </span>
+    </header>
+    <main class="Bloc_en_bas">
+        <section class="titre">
+            <h1>Vos tontines</h1>
+            <h3>"Gérez vos tontines et suivez vos contributions"</h3>
+        </section>
+        <section class="cartes">
+
+        </section>
+        <button id="nouvelleTontine"> + Créer une nouvelle tontine</button>
+
+    </main>
+    <footer class="création" id="formulaireTontine">
+        <h2>Création de la tontine</h2>
+        <h3>Entrez le nom de votre tontine</h3>
+        <input type="text" placeholder="Nom de la tontine" id="nomtontine">
+        <h3>Entrez les membres</h3>
+        <input type="text" id="nomMembre" placeholder="Nom du membre">
+
+        <button type="button" id="ajouterMembre">Ajouter</button>
+
+        <div id="listeMembres"></div>
+        <h3>Entrez la date du premier versement</h3>
+        <section>
+            <select name="jour" id="jour">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+            </select>
+            <select name="" id="mois">
+                <option value="janvier">janvier</option>
+                <option value="février">février</option>
+                <option value="mars">mars</option>
+                <option value="avril">avril</option>
+                <option value="mai">mai</option>
+                <option value="juin">juin</option>
+                <option value="juillet">juillet</option>
+                <option value="août">août</option>
+                <option value="septembre">septembre</option>
+                <option value="octobre">octobre</option>
+                <option value="novembre">novembre</option>
+                <option value="décembre">décembre</option>
+            </select>
+        </section>
+        <select name="" id="annee">
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+        </select>
+
+        <h4 id="indication">Le <b>5</b> de chaque mois, à partir de <b>juin,</b> un membre recevra la cagnotte.</h4>
+
+        <h3>Choisissez la durée de la tontine</h3>
+
+        <select name="" id="duree">
+            <option value="1">1 mois</option>
+            <option value="2">2 mois</option>
+            <option value="3">3 mois</option>
+            <option value="4">4 mois</option>
+            <option value="5">5 mois</option>
+            <option value="6">6 mois</option>
+            <option value="7">7 mois</option>
+            <option value="8">8 mois</option>
+            <option value="9">9 mois</option>
+            <option value="10">10 mois</option>
+            <option value="11">11 mois</option>
+            <option value="12">12 mois</option>
+            <option value="13">13 mois</option>
+            <option value="14">14 mois</option>
+            <option value="15">15 mois</option>
+            <option value="16">16 mois</option>
+            <option value="17">17 mois</option>
+            <option value="18">18 mois</option>
+            <option value="19">19 mois</option>
+            <option value="20">20 mois</option>
+        </select>
+        <h3>Choisissez le montant de la cotisation mensuelle</h3>
+        <input type="number" name="" id="montant" placeholder="Entrez le montant ici">
+        <h3>Choisissez la devise</h3>
+        <select name="" id="devise">
+            <option value="USD">USD</option>
+            <option value="CDF">CDF</option>
+        </select>
+        <button class="btn-creer" id="btn-creer">Créer la tontine</button>
+    </footer>
+
+    <script src="tontine.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Savings</title>
+    <link rel="shortcut icon" href="logo1.png">
+    <link rel="stylesheet" href="connexion.css">
+</head>
+
+<body>
+    <form action="">
+        <h2>Tentez de vous reconnecter à votre compte ! </h2>
+        <h3>Merci de remplir les informations demandées</h3>
+        <p class="inscription">Vous n'avez pas de compte ?<a href="inscription.html"> Créez-en un !</a></p>
+
+        <label for="nomu">Nom d'utilisateur :</label>
+        <input type="text" id="nomu" placeholder="Entrez votre nom d'utilisateur" class="renseignement">
+        <br>
+        <label for="mdp">Mot de passe : </label>
+        <input type="password" id="mdp" placeholder="Entrez votre mot de passe" class="renseignement">
+        <br>
+        <input type="submit" value="Envoyez" id="sbt">
+    </form>
+    <script>
+        let bouton = document.getElementById("sbt");
+        bouton.addEventListener("click", function (event) {
+            event.preventDefault();
+            let nomu = document.getElementById("nomu").value;
+            let mdp = document.getElementById("mdp").value;
+            let utilisateurs = JSON.parse(localStorage.getItem("utilisateurs")) || [];
+
+            let compteTrouve = utilisateurs.find(function (user) {
+                return user.nomu === nomu;
+            });
+
+            if (!compteTrouve) {
+                alert("Aucun utilisateur enregistré");
+                window.location.href = "inscription.html";
+                return;
+            }
+            else if (nomu === compteTrouve.nomu && mdp !== compteTrouve.mdp) {
+                alert("Mot de passe incorrecte");
+            }
+            else if (mdp === compteTrouve.mdp) {
+                alert("Compte connecté");
+                localStorage.setItem("utilisateur", JSON.stringify(compteTrouve));
+                setTimeout(function () { window.location.href = "accueil.html" }, 1000);
+
+                // On vérifie si la personne a des nouvelles notifications et qu'au moins une est "en_attente"
+                if (compteTrouve.notifications && compteTrouve.notifications.some(function (n) { return n.statut === "en_attente"; })) {
+                    alert("Vous avez une nouvelle notification !");
+                }
+
+            }
+            else {
+                alert("Mot de passe incorrect");
+            }
+
+        });
+
+    </script>
+</body>
+
+</html>

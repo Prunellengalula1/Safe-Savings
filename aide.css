@@ -1,0 +1,55 @@
+body {
+    background-color: #0a1f44;
+    margin: 0;
+}
+
+.Barre_en_haut {
+    display: flex;
+    justify-content: space-around;
+}
+
+.trois_barres {
+    margin-top: 20px;
+}
+
+.retour {
+    text-decoration: none;
+    margin-top: 12px;
+    color: white;
+
+}
+
+.Barre_en_haut img {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+}
+
+.Bloc_en_bas {
+    background-color: white;
+    border-radius: 20px;
+    padding-top: 30px;
+    padding-left: 35px;
+    padding-bottom: 30%;
+}
+
+.Bloc_en_bas img {
+    width: 60px;
+    height: 60px;
+    margin-top: 3%;
+}
+
+.Bloc_en_bas a {
+    border: #0a1f44 solid 5px;
+    border-radius: 20px;
+    width: 68%;
+    height: 15%;
+    background-color: #0a1f44;
+    text-decoration: none;
+    color: white;
+    padding-bottom: 3%;
+    display: block;
+    margin-left: 15%;
+    margin-bottom: 15px;
+    text-align: center;
+}

@@ -214,6 +214,10 @@ body {
         height: 40px;
     }
 
+    #notification {
+        margin-left: 35px;
+    }
+
 }
 
 .actif {

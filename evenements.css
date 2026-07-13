@@ -284,3 +284,14 @@ progress::-webkit-progress-value {
     color: #0a1f44;
     background: #ffd166;
 }
+
+@media (max-width:768px) {
+    .cartes-evenements {
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .Bloc_en_bas {
+        padding: 20px;
+    }
+}

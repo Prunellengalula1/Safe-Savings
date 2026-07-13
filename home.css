@@ -1,7 +1,6 @@
 body {
     margin: 0;
-    background: #0a1f44;
-
+    background-color: #0a1f44;
 }
 
 .home {
@@ -13,11 +12,12 @@ body {
 }
 
 #image1 {
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     height: auto;
-    margin-left: 20%;
+    display: block;
+    margin: 0 auto;
 }
-
 
 h3 {
     color: green;
@@ -26,8 +26,6 @@ h3 {
 .section {
     display: flex;
     justify-content: left;
-    margin-bottom: -20px;
-
 }
 
 .image {
@@ -35,14 +33,13 @@ h3 {
     height: 50px;
 }
 
-
 .inscrivez-vous {
     text-decoration: none;
     color: white;
     background-color: green;
     border: solid green 10px;
     border-radius: 10px;
-    margin-left: 50%;
+    display: inline-block;
     cursor: pointer;
 }
 
@@ -51,11 +48,71 @@ h3 {
     background-color: #0a1f44;
 }
 
+.bouton {
+    text-align: center;
+    margin-top: 20px;
+}
+
 .connectez-vous {
-    margin-left: 45%;
+    margin: 0 auto;
+    margin-top: 20px;
 }
 
 .connectez-vous_a {
     text-decoration: none;
     color: green;
+}
+
+/* Responsive pour les téléphones */
+@media (max-width: 768px) {
+    .home {
+        margin: 20px;
+        margin-top: 30px;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 35px;
+    }
+
+    main {
+        font-size: 25px;
+    }
+
+    #image1 {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        display: block;
+        margin: 20px auto;
+    }
+
+    .section {
+        display: flex;
+        justify-content: left;
+        font-size: 25px;
+    }
+
+    .image {
+        width: 40px;
+        height: 40px;
+    }
+
+    h3 {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .inscrivez-vous {
+        display: block;
+        width: fit-content;
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    .connectez-vous {
+        /* margin-left: 0; */
+        text-align: center;
+        margin-top: 20px;
+    }
 }

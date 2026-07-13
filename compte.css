@@ -20,7 +20,6 @@ body {
     text-decoration: none;
     margin-top: 12px;
     color: white;
-
 }
 
 .Barre_en_haut img {
@@ -59,8 +58,15 @@ body {
     color: white;
     padding-bottom: 3%;
     display: block;
-    margin-left: 15%;
-    margin-bottom: 15px;
+    margin: 0 auto;
+    margin-bottom: 20px;
     text-align: center;
+}
 
+@media (max-width:768px) {
+    .menu a {
+        width: 80%;
+        height: 15%;
+
+    }
 }

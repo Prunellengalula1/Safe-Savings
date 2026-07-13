@@ -117,3 +117,14 @@ body {
     font-weight: 500;
     margin: 0;
 }
+
+@media (max-width:768px) {
+    .section-notif {
+        padding-right: 10%;
+    }
+
+    .titre h1 {
+        padding-right: 10%;
+    }
+
+}

@@ -17,7 +17,6 @@ body {
     text-decoration: none;
     margin-top: 12px;
     color: white;
-
 }
 
 .Barre_en_haut img {
@@ -32,7 +31,6 @@ body {
     padding-top: 30px;
     padding-left: 35px;
     padding-bottom: 30%;
-
 }
 
 .Bloc_en_bas details {
@@ -43,11 +41,10 @@ body {
 .Bloc_en_bas summary {
     border: #0a1f44 solid 2px;
     border-radius: 10px;
-    width: 20%;
+    width: 50%;
     padding: 10px;
     margin: auto;
     cursor: pointer;
-    /* list-style: none; */
 }
 
 .Bloc_en_bas p {
@@ -55,9 +52,8 @@ body {
     text-align: center;
     border: #0a1f44 solid 2px;
     background-color: #0a1f44;
-    color: white;
-    width: 30%;
-    /* height: 20%; */
+    color: #ffffff;
+    width: 50%;
     padding: 10px;
     border-radius: 10px;
     margin-left: auto;
@@ -66,4 +62,11 @@ body {
 
 .Bloc_en_bas a {
     color: white;
+}
+
+@media (max-width:768px) {
+    .Bloc_en_bas {
+        padding: 20px;
+    }
+
 }

@@ -53,3 +53,10 @@ body {
     margin-bottom: 15px;
     text-align: center;
 }
+
+@media (max-width:768px) {
+    .Bloc_en_bas {
+        padding: 20px;
+    }
+
+}

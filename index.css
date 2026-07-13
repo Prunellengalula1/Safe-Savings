@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-family: 'Times New Roman', 'serif';
-    background-color: white;
+    background-color: #639b49;
     color: #0a1f44;
     text-align: center;
 }
@@ -18,7 +18,7 @@ body {
 }
 
 .splash img {
-    width: 6OOpx;
+    width: 400px;
     animation: zoom 1.5s infinite alternate;
 }
 
@@ -34,4 +34,12 @@ body {
     to {
         transform: scale(1.2);
     }
+}
+
+@media (max-width:768px) {
+    .splash img {
+        width: 350px;
+        animation: zoom 1.5s infinite alternate;
+    }
+
 }

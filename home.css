@@ -90,7 +90,6 @@ h3 {
     .section {
         display: flex;
         justify-content: left;
-        font-size: 25px;
     }
 
     .image {
@@ -99,7 +98,7 @@ h3 {
     }
 
     h3 {
-        font-size: 22px;
+        font-size: 20px;
         text-align: center;
     }
 
@@ -111,7 +110,6 @@ h3 {
     }
 
     .connectez-vous {
-        /* margin-left: 0; */
         text-align: center;
         margin-top: 20px;
     }

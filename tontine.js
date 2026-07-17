@@ -146,7 +146,7 @@ function afficherTontines() {
             }
             //Calcul de la date du prochain versement 
             //Si 0 distributions faites alors, la date est la date du début
-            //Si 1 distribution faite alor, la date est de +1 mois 
+            //Si 1 distribution faite alors, la date est de +1 mois 
             let nbDistributions = tontine.distributionsFaites.length;
             let dateProchainVersement = new Date(tontine.annee, moisNumero[tontine.mois], tontine.jour);
             dateProchainVersement.setMonth(dateProchainVersement.getMonth() + nbDistributions);
@@ -418,7 +418,7 @@ bouton.addEventListener("click", function () {
     let mois = document.getElementById("mois").value;
     let annee = document.getElementById("annee").value;
     let duree = Number(document.getElementById("duree").value);
-    let montant = Number(document.getElementById("montant").value);
+    let montant = Number(document.getElementById("montant").value); g
     let devise = document.getElementById("devise").value;
 
     let nombreMembres = membres.length;

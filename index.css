@@ -42,4 +42,8 @@ body {
         animation: zoom 1.5s infinite alternate;
     }
 
+    h1 {
+        font-size: 20px;
+    }
+
 }

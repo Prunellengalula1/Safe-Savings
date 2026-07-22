@@ -60,14 +60,14 @@ function afficherEvenements() {
                 zoneFormulaireActionHTML = `
                             <div class="zone-don">
                                 <input type="number" id="montantDon-${evenement.id}" placeholder="Montant à ajouter">
-                                <button id="epargner" onclick="alimenterCaissePrivée(${evenement.id})">🔒 Épargner</button>
+                                <button id="epargner" onclick="alimenterCaissePrivée(${evenement.id})"> Épargner</button>
                             </div>`;
 
                 // Boutons de contrôle pour récupérer et supprimer
                 let boutonCasserHTML = "";
                 if (actuel > 0) {
                     boutonCasserHTML = `
-                                <button id="casser" onclick="casserCaissePrivée(${evenement.id})">💰 Casser la tirelire (${actuel} ${evenement.devise}) </button>`;
+                                <button id="casser" onclick="casserCaissePrivée(${evenement.id})"> Casser la tirelire (${actuel} ${evenement.devise}) </button>`;
                 }
                 zoneBoutonsControleHTML = `
                             <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
@@ -98,12 +98,12 @@ function afficherEvenements() {
                     if (actuel > 0) {
                         boutonRetirerHTML = `
                                     <button id="retirer" onclick="retirerFondsCagnotte(${evenement.id})">
-                                        💰 Retirer (${actuel} ${evenement.devise})
+                                        Retirer (${actuel} ${evenement.devise})
                                     </button>`;
                     }
                     boutonsCreateurHTML = `
                                 ${boutonRetirerHTML}
-                                <button class="supprimer" onclick="supprimerCagnotte(${evenement.id})" >🗑️ Supprimer</button>`;
+                                <button class="supprimer" onclick="supprimerCagnotte(${evenement.id})" >🗑️Supprimer</button>`;
                 }
 
                 let boutonInviterHTML = `
@@ -266,8 +266,12 @@ if (btnCreerEvenementNouveau) {
         let description = document.getElementById("descriptionEvent").value;
         let dateLimiteInput = document.getElementById("dateLimite").value;
 
-        if (titre === "" || type === "" || isNaN(montantCible) || montantCible <= 0 || devise === "" || dateLimiteInput === "") {
+        if (titre === "" || type === "" || montantCible === "" || devise === "" || dateLimiteInput === "") {
             alert("Veuillez remplir tous les champs obligatoires.");
+            return;
+        }
+        if (isNaN(montantCible) || montantCible <= 0) {
+            alert("Veuillez entrez un montant supérieur à 0");
             return;
         }
 
@@ -278,6 +282,12 @@ if (btnCreerEvenementNouveau) {
             let nomsMois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
             mois = nomsMois[parseInt(partiesDate[1], 10) - 1];
             jour = partiesDate[2];
+        }
+        let datechoisie = new Date(dateLimiteInput);
+        let aujourdHui = new Date();
+        if (datechoisie < aujourdHui) {
+            alert("La date limite ne peut pas être une date passée !");
+            return;
         }
 
         // Déterminer s'il s'agit d'une caisse privée ou d'une cagnotte de groupe
@@ -403,13 +413,13 @@ function inviterQuelquUn(idEvenement) {
     if (!nomAmi) return;
     nomAmi = nomAmi.trim();
 
-    let amiExiste = utilisateurs.find(u => u.nomu === nomAmi || u.nom === nomAmi || u.username === nomAmi);
+    let amiExiste = utilisateurs.find(u => u.nomu === nomAmi || u.nom === nomAmi);
     if (!amiExiste) {
         alert("Utilisateur introuvable.");
         return;
     }
 
-    let monNom = utilisateurConnecte.nomu || utilisateurConnecte.nom || utilisateurConnecte.username || "Un utilisateur";
+    let monNom = utilisateurConnecte.nomu || utilisateurConnecte.nom || "Un utilisateur";
 
     if (evenement.createur === amiExiste.nomu || (evenement.invites && evenement.invites.includes(amiExiste.nomu))) {
         alert("Cet utilisateur participe déjà ou est le créateur.");

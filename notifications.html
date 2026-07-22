@@ -14,7 +14,7 @@
         <a class="retour" href="accueil.html">
             <h4> &#8617;Retour</h4>
         </a>
-        <span class="trois_barres"> <a href="compte.html"><img src="trois_barres.png" alt=""></a> </span>
+        <span class="trois_barres"> <a href="compte.html"><img src="trois_barres.png" alt=""></a></span>
     </header>
 
     <main class="Bloc_en_bas">
@@ -29,7 +29,7 @@
             </div>
 
             <div class="section-notif">
-                <h2>📜 Historique de vos activités</h2>
+                <h2>📃 Historique de vos activités</h2>
                 <div id="zone-historique">
 
                 </div>
@@ -50,7 +50,7 @@
             if (!utilisateur || !zoneInvits || !zoneHist) return;
 
             // Récupérer le compte mis à jour depuis la liste globale
-            let userActuel = utilisateurs.find(u => u.nomu === utilisateur.nomu || u.nom === utilisateur.nomu || u.username === utilisateur.nomu);
+            let userActuel = utilisateurs.find(u => u.nomu === utilisateur.nomu || u.nom === utilisateur.nomu);
 
             if (!userActuel || !userActuel.notifications) {
                 zoneInvits.innerHTML = "<p>Aucune invitation</p>";
@@ -177,7 +177,7 @@
             let moiConnecte = JSON.parse(localStorage.getItem("utilisateur"));
 
             if (!moiConnecte) return;
-            let monNom = moiConnecte.nomu || moiConnecte.nom || moiConnecte.username;
+            let monNom = moiConnecte.nomu || moiConnecte.nom;
 
             let evenement = evenementsList.find(e => e.id === Number(idCagnotte));
             if (!evenement) {
@@ -193,7 +193,7 @@
                 evenement.invitationsEnAttente = evenement.invitationsEnAttente.filter(name => name !== monNom);
             }
 
-            let monCompteGlobal = utilisateursList.find(u => u.nomu === monNom || u.nom === monNom || u.username === monNom);
+            let monCompteGlobal = utilisateursList.find(u => u.nomu === monNom || u.nom === monNom);
             if (monCompteGlobal && monCompteGlobal.notifications) {
                 let notif = monCompteGlobal.notifications.find(n => n.idInvitation === Number(idInvitation));
                 if (notif) {
@@ -224,14 +224,14 @@
             let moiConnecte = JSON.parse(localStorage.getItem("utilisateur"));
 
             if (!moiConnecte) return;
-            let monNom = moiConnecte.nomu || moiConnecte.nom || moiConnecte.username;
+            let monNom = moiConnecte.nomu || moiConnecte.nom;
 
             let evenement = evenementsList.find(e => e.id === Number(idCagnotte));
             if (evenement && evenement.invitationsEnAttente) {
                 evenement.invitationsEnAttente = evenement.invitationsEnAttente.filter(name => name !== monNom);
             }
 
-            let monCompteGlobal = utilisateursList.find(u => u.nomu === monNom || u.nom === monNom || u.username === monNom);
+            let monCompteGlobal = utilisateursList.find(u => u.nomu === monNom || u.nom === monNom);
             if (monCompteGlobal && monCompteGlobal.notifications) {
                 let notif = monCompteGlobal.notifications.find(n => n.idInvitation === Number(idInvitation));
                 if (notif) {

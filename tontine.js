@@ -356,8 +356,16 @@ let membres = [];
 let ajouterMembre = document.getElementById("ajouterMembre");
 
 ajouterMembre.addEventListener("click", function () {
-    let nomMembre = document.getElementById("nomMembre").value;
+    let nomMembre = document.getElementById("nomMembre").value.trim();
     if (nomMembre !== "") {
+        //Si le nom est déjà sur la liste
+        let existedeja = membres.some(function (m) {
+            return m.nom === nomMembre;
+        })
+        if (existedeja) {
+            alert(`${nomMembre} est déjà sur la liste !`);
+            return;
+        }
         let statut = "En attente";
         // Si c'est le créateur
         if (nomMembre === utilisateur.nomu) {
@@ -414,19 +422,45 @@ window.descendre = descendre;
 bouton.addEventListener("click", function () {
 
     let nomtontine = document.getElementById("nomtontine").value;
-    let jour = document.getElementById("jour").value;
+    let jour = parseInt(document.getElementById("jour").value);
     let mois = document.getElementById("mois").value;
-    let annee = document.getElementById("annee").value;
+    let annee = parseInt(document.getElementById("annee").value);
     let duree = Number(document.getElementById("duree").value);
-    let montant = Number(document.getElementById("montant").value); g
+    let montant = Number(document.getElementById("montant").value);
     let devise = document.getElementById("devise").value;
 
     let nombreMembres = membres.length;
     let nombrePassages = duree / nombreMembres;
     let totalMensuel = nombreMembres * montant;
 
-    if (nomtontine === "" || isNaN(montant) || montant <= 0 || devise === "" || nombreMembres === 0 || isNaN(duree)) {
-        alert("Remplissez tous les champs et ajoutez au moins un membre.");
+    let moisNumero = {
+        "janvier": 0,
+        "février": 1,
+        "mars": 2,
+        "avril": 3,
+        "mai": 4,
+        "juin": 5,
+        "juillet": 6,
+        "août": 7,
+        "septembre": 8,
+        "octobre": 9,
+        "novembre": 10,
+        "décembre": 11,
+    };
+    let dateDebut = new Date(annee, moisNumero[mois], jour);
+    let aujourdHui = new Date();
+
+    if (dateDebut < aujourdHui) {
+        alert("La date du premier versement doit venir après celle d'aujourd'hui !");
+        return;
+    }
+
+    if (nomtontine === "" || isNaN(montant) || montant <= 0 || devise === "" || isNaN(duree)) {
+        alert("Remplissez tous les champs et veuillez à ce que le montant soit supérieur à 0");
+        return;
+    }
+    if (nombreMembres === 1 || nombreMembres === 0) {
+        alert("Le nombre de membres doit être supérieur à 1");
         return;
     }
 
@@ -458,7 +492,8 @@ bouton.addEventListener("click", function () {
             cagnotteActuelle: 0,
             historiquePaiements: [],
             distributionsFaites: [],
-            createur: utilisateur.nomu
+            createur: utilisateur.nomu,
+
         };
         // On récupère le créateur actuel
         let createur = JSON.parse(localStorage.getItem("utilisateur")).nomu;
@@ -487,7 +522,7 @@ bouton.addEventListener("click", function () {
         }
         localStorage.setItem("tontines", JSON.stringify(tontines));
         afficherTontines();
-        alert(`Chaque membre recevra ${totalMensuel} ${devise}, et cela dans un intervalle de ${nombrePassages} mois au cours de cette tontine`);
+        alert(`Chaque membre recevra ${totalMensuel} ${devise}, et cela ${nombrePassages} fois dans un intervalle de ${nombreMembres - 1} mois au cours de cette tontine`);
 
         membres = [];
         afficherMembres();
